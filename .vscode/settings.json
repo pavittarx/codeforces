@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    ".env": "dotenv",
+    "*.conf": "nginx",
+    "*.tsx": "typescriptreact",
+    "iostream": "cpp",
+    "ostream": "cpp",
+    "chrono": "cpp"
+  }
+}
