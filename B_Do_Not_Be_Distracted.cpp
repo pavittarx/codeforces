@@ -2,6 +2,7 @@
 // Problem: https://codeforces.com/group/ItzpE9GqdX/contest/579655/problem/B
 
 #include <iostream>
+#include <string>
 #include <unordered_map>
 using namespace std;
 
@@ -15,7 +16,7 @@ int main() {
     unordered_map<char, bool> map;
 
     char current;
-    bool isSuspicious = false;
+    bool canBeSuspicious = false;
 
     for (size_t i = 0; i < len; i++) {
       char ch;
@@ -23,23 +24,30 @@ int main() {
 
       if (i == 0) {
         current = ch;
-        map[current] = true;
         continue;
       }
 
       if (ch != current) {
-        current = ch;
+        map[current] = 1;
 
-        if (map[current]) {
-          isSuspicious = true;
+        if (map[ch] == 1) {
+          canBeSuspicious = true;
+          string s;
+          getline(cin, s);
           break;
         }
 
-        map[current] = true;
+        current = ch;
+      }
+
+      if (i == len - 1) {
+        if (map[ch] == 1) {
+          canBeSuspicious = true;
+        }
       }
     }
 
-    cout << (isSuspicious ? "NO" : "YES") << endl;
+    cout << (canBeSuspicious ? "NO" : "YES") << endl;
     cases--;
   }
 
