@@ -1,6 +1,5 @@
 // Draw a Square [2074A]
-// Problem: https://codeforces.com/contest/2074/A
-
+// Problem: https://codeforces.com/contest/2074/problem/A
 #include <iostream>
 
 using namespace std;
