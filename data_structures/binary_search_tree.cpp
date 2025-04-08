@@ -13,6 +13,8 @@ class TreeNode {
     this->left = nullptr;
     this->right = nullptr;
   }
+
+  ~TreeNode() {}
 };
 
 void insert(TreeNode*& node, int val) {
@@ -25,13 +27,12 @@ void insert(TreeNode*& node, int val) {
   if (val == node->val) {
     cout << "[insert]: Value is already present, duplicates are not allowed."
          << endl;
+    return;
   }
 
   if (val < node->val) {
     insert(node->left, val);
-  }
-
-  if (val > node->val) {
+  } else if (val > node->val) {
     insert(node->right, val);
   }
 }
@@ -74,20 +75,37 @@ void deleteNode(TreeNode*& node, int key) {
     }
 
     // Case II: One Child Exists (right)
-    if (node->left == nullptr && node->right != nullptr) {
+    if (node->left == nullptr && node->right) {
       node = node->right;
       cout << "[delete] One child (right): " << node->val << endl;
       return;
     }
 
     // Case II: One Child Exists (left)
-    if (node->right == nullptr && node->left != nullptr) {
+    if (node->right == nullptr && node->left) {
       node = node->left;
       cout << "[delete] One child (left): " << node->val << endl;
       return;
     }
 
     // Case IV: Both Child Exists
+    if (node->left && node->right) {
+      // smallest value in right subtree
+      TreeNode* temp = node->right;
+
+      // navigate to extreme right.
+      while (temp->left != nullptr) {
+        temp = temp->left;
+      }
+
+      node->val = temp->val;
+      if (temp->right != nullptr) {
+        temp = temp->right;
+      }
+
+      cout << "[delete] Node Deleted: " << key << endl;
+      return;
+    }
   }
 
   if (key < node->val) {
@@ -97,6 +115,18 @@ void deleteNode(TreeNode*& node, int key) {
   if (key > node->val) {
     deleteNode(node->right, key);
   }
+}
+
+void destroyTree(TreeNode* node) {
+  if (node == nullptr) {
+    return;
+  }
+
+  destroyTree(node->left);
+  destroyTree(node->right);
+
+  delete node;
+  node = nullptr;
 }
 
 int main() {
@@ -116,6 +146,9 @@ int main() {
 
   deleteNode(root, 27);
   deleteNode(root, 5);
+  deleteNode(root, 10);
+
+  destroyTree(root);
 
   return 0;
 }
