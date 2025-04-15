@@ -97,15 +97,13 @@ void deleteNode(TreeNode*& node, int key) {
       while (temp->left != nullptr) {
         temp = temp->left;
       }
-
       node->val = temp->val;
-      if (temp->right != nullptr) {
-        temp = temp->right;
-      }
 
-      cout << "[delete] Node Deleted: " << key << endl;
-      return;
+      deleteNode(node->right, temp->val);
     }
+
+    cout << "[delete] Node Deleted: " << key << endl;
+    return;
   }
 
   if (key < node->val) {
@@ -129,6 +127,36 @@ void destroyTree(TreeNode* node) {
   node = nullptr;
 }
 
+void inOrder(TreeNode* node) {
+  if (node == nullptr) {
+    return;
+  }
+
+  inOrder(node->left);
+  cout << node->val << endl;
+  inOrder(node->right);
+}
+
+void preOrder(TreeNode* node) {
+  if (node == nullptr) {
+    return;
+  }
+
+  cout << node->val << endl;
+  preOrder(node->left);
+  preOrder(node->right);
+}
+
+void postOrder(TreeNode* node) {
+  if (node == nullptr) {
+    return;
+  }
+
+  postOrder(node->left);
+  postOrder(node->right);
+  cout << node->val << endl;
+}
+
 int main() {
   TreeNode* root = new TreeNode(15);
   cout << "Binary Search Tree" << endl;
@@ -144,9 +172,11 @@ int main() {
   search(root, 20);
   search(root, 9);
 
-  deleteNode(root, 27);
-  deleteNode(root, 5);
+  // deleteNode(root, 27);
+  deleteNode(root, 7);
   deleteNode(root, 10);
+
+  inOrder(root);
 
   destroyTree(root);
 
